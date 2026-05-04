@@ -6,7 +6,7 @@ export const bbsConfig: BBSConfig = {
 	system: {
 		name:           'ARIA4C bbs v1.0',
 		version:        '1.0.0',
-		hostname:       'bbs.illyaarefiev.dev',
+		hostname:       'aria4c.me',
 		welcomeMessage: 'Welcome, USER. You are visitor #1,337.',
 		nodeId:         'NODE 01',
 		baudRate:       9600

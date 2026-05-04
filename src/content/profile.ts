@@ -50,8 +50,8 @@ export const profile = {
 		{
 			key:    '3',
 			label:  'SITE',
-			value:  'bbs.illyaarefiev.dev',
-			url:    'https://bbs.illyaarefiev.dev/',
+			value:  'aria4c.me',
+			url:    'https://aria4c.me/',
 			action: 'open-tab' as const
 		}
 	] as ContactLink[]

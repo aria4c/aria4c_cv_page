@@ -24,7 +24,7 @@ export const projects: ProjectEntry[] = [
 		primaryTag:  'SvelteKit',
 		featured:    true,
 		links: [
-			{ key: 'D', label: 'Live site', url: 'https://bbs.illyaarefiev.dev/' },
+			{ key: 'D', label: 'Live site', url: 'https://aria4c.me/' },
 			{ key: 'G', label: 'GitHub aria4c', url: 'https://github.com/aria4c' }
 		]
 	},

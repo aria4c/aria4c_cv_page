@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* BBS CSS Custom Properties — populated at runtime by theme.store.ts */
+:root,
+html.bbs-theme-night {
+	color-scheme: dark;
+}
+
+html.bbs-theme-day {
+	color-scheme: light;
+}
+
+:root {
+	--bbs-bg: #000000;
+	--bbs-fg: #ffffff;
+	--bbs-primary: #ffffff;
+	--bbs-secondary: #aaaaaa;
+	--bbs-muted: #555555;
+	--bbs-highlight: #ffffff;
+	--bbs-highlight-text: #000000;
+	--bbs-cursor: #ffffff;
+	--bbs-error: #ff4444;
+	--bbs-success: #44ff44;
+	--bbs-warning: #ffaa00;
+	--bbs-scanline-color: rgba(0, 0, 0, 0.12);
+	--bbs-font: 'JetBrains Mono', 'Courier New', monospace;
+	--bbs-font-size: 14px;
+	--bbs-font-size-lg: 16px;
+	--bbs-font-size-sm: 12px;
+	--bbs-line-height: 1.5;
+}
+
+/* Global reset for BBS aesthetic */
+*, *::before, *::after {
+	box-sizing: border-box;
+}
+
+html, body, #app {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: var(--bbs-bg);
+	color: var(--bbs-fg);
+	font-family: var(--bbs-font);
+	font-size: var(--bbs-font-size);
+	line-height: var(--bbs-line-height);
+	overflow: hidden;
+}
+
+/* CRT scanline keyframes */
+@keyframes scanline-scroll {
+	0%   { background-position: 0 0; }
+	100% { background-position: 0 100%; }
+}
+
+@keyframes screen-flicker {
+	0%   { opacity: 1; }
+	2%   { opacity: 0.85; }
+	4%   { opacity: 1; }
+	50%  { opacity: 1; }
+	52%  { opacity: 0.9; }
+	54%  { opacity: 1; }
+}
+
+@keyframes cursor-blink {
+	0%, 49%  { opacity: 1; }
+	50%, 100% { opacity: 0; }
+}
+
+@keyframes progress-fill {
+	from { clip-path: inset(0 100% 0 0); }
+	to   { clip-path: inset(0 0% 0 0); }
+}
+
+/* Suppress browser focus rings — BBS handles its own selection state */
+#app *:focus {
+	outline: none;
+}

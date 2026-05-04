@@ -1,0 +1,97 @@
+# ─── Dependencies ─────────────────────────────────────────────────────────────
+node_modules/
+
+# ─── SvelteKit / Vite ─────────────────────────────────────────────────────────
+.svelte-kit/
+build/
+dist/
+.output/
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# ─── Package managers (logs + caches; keep lockfiles committed) ───────────────
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.pnpm-store/
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# ─── Environment & secrets ────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+!.env*.example
+
+# ─── Test / coverage ──────────────────────────────────────────────────────────
+coverage/
+.nyc_output/
+*.lcov
+.vitest/
+
+# ─── TypeScript incremental ───────────────────────────────────────────────────
+*.tsbuildinfo
+
+# ─── Host / deploy tooling (generated locally) ─────────────────────────────────
+.vercel/
+.netlify/
+
+# ─── Terraform / infra (if added later) ─────────────────────────────────────────
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.tfplan
+*.tfvars
+!*.tfvars.example
+
+# ─── OS ───────────────────────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ─── Editors & IDEs ─────────────────────────────────────────────────────────────
+*.swp
+*.swo
+*~
+.idea/
+*.iml
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.settings/
+
+# VS Code / Cursor — ignore local overrides; commit shared settings if desired
+.vscode/*
+!.vscode/extensions.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# ─── Misc ─────────────────────────────────────────────────────────────────────
+*.log
+*.pem
+.cache/
+.temp/
+tmp/
+temp/
+.parcel-cache/
+
+# ─── Optional E2E (uncomment if you add Playwright/Cypress) ───────────────────
+# test-results/
+# playwright-report/
+# blob-report/
+# playwright/.cache/
+# cypress/videos/
+# cypress/screenshots/

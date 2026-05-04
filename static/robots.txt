@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://bbs.illyaarefiev.dev/sitemap.xml

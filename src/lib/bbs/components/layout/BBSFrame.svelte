@@ -4,6 +4,7 @@
   a footer row in the bottom border.
 -->
 <script lang="ts">
+	import { onMount, onDestroy } from 'svelte';
 	import type { BorderStyle, BBSConfig } from '../../types/config.js';
 	import { getChars } from '../../utils/box-drawing.js';
 	import { configStore } from '../../stores/config.store.js';
@@ -13,11 +14,32 @@
 		type ThemeMode
 	} from '../../stores/theme.store.js';
 
-	export let title:      string      = '';
-	export let subtitle:   string      = '';
+	const MOBILE_MQ = '(max-width: 720px)';
+
+	export let title = '';
+	export let subtitle = '';
 	export let borderStyle: BorderStyle | undefined = undefined;
-	/** When true, append `[H] HOME`, optional `[T] DAY|NIGHT`, `[Q] QUIT` from config (top-right cluster). */
-	export let showGlobalNavHints: boolean = true;
+	/** Top-right [H]/[T]/[Q] hints on desktop; omitted when narrow — `src/MOBILE_LAYOUT.spec.md`. */
+	export let showGlobalNavHints = true;
+
+	let mqMatchesNarrow =
+		typeof window !== 'undefined' && window.matchMedia(MOBILE_MQ).matches;
+
+	let removeMqListener: (() => void) | undefined;
+
+	onMount(() => {
+		const mq = window.matchMedia(MOBILE_MQ);
+		const sync = (): void => {
+			mqMatchesNarrow = mq.matches;
+		};
+		sync();
+		mq.addEventListener('change', sync);
+		removeMqListener = () => mq.removeEventListener('change', sync);
+	});
+
+	onDestroy(() => {
+		removeMqListener?.();
+	});
 
 	const FILL = '═'.repeat(300);
 	const FILL_S = '─'.repeat(300);
@@ -43,8 +65,13 @@
 	$: hFill = bStyle === 'single' ? FILL_S : bStyle === 'heavy' ? FILL_H : FILL;
 
 	$: cfg = $configStore.config;
+	$: globalHintsEligible =
+		showGlobalNavHints && cfg && !mqMatchesNarrow ? cfg : undefined;
+
 	$: navHints =
-		showGlobalNavHints && cfg ? globalNavHintsText(cfg, $themeModeStore, $matrixLockedStore) : '';
+		globalHintsEligible
+			? globalNavHintsText(globalHintsEligible, $themeModeStore, $matrixLockedStore)
+			: '';
 
 	$: rightRail =
 		navHints && subtitle
@@ -62,8 +89,8 @@
 		overflow: hidden;
 	"
 >
-	<!-- Top title bar: ╔══[ TITLE ]══════════════════[ SUBTITLE ]══╗ -->
-	<div class="border-row" style="color: var(--bbs-primary); flex-shrink: 0;">
+	<!-- Top title bar -->
+	<div class="border-row bbs-frame-titlebar" style="color: var(--bbs-primary); flex-shrink: 0;">
 		<span>{c.tl}</span>
 		{#if title}<span class="no-shrink">&nbsp;{title}&nbsp;</span>{/if}
 		<span class="h-fill">{hFill}</span>
@@ -82,17 +109,19 @@
 
 	<!-- Footer row (optional slot, e.g. BackPrompt) -->
 	{#if $$slots.footer}
-		<div class="divider-row" style="color: var(--bbs-primary); flex-shrink: 0;">
-			<span>{c.ml}</span>
-			<span class="h-fill">{hFill}</span>
-			<span>{c.mr}</span>
-		</div>
-		<div class="footer-area">
-			<span class="side-border" style="color: var(--bbs-primary);">{c.v}</span>
-			<div style="flex: 1; min-width: 0; padding: 0.25rem 1rem; overflow: hidden;">
-				<slot name="footer" />
+		<div class="bbs-frame-footer">
+			<div class="divider-row" style="color: var(--bbs-primary); flex-shrink: 0;">
+				<span>{c.ml}</span>
+				<span class="h-fill">{hFill}</span>
+				<span>{c.mr}</span>
 			</div>
-			<span class="side-border" style="color: var(--bbs-primary);">{c.v}</span>
+			<div class="footer-area">
+				<span class="side-border" style="color: var(--bbs-primary);">{c.v}</span>
+				<div style="flex: 1; min-width: 0; padding: 0.25rem 1rem; overflow: hidden;">
+					<slot name="footer" />
+				</div>
+				<span class="side-border" style="color: var(--bbs-primary);">{c.v}</span>
+			</div>
 		</div>
 	{/if}
 
@@ -108,6 +137,14 @@
 	.bbs-frame {
 		box-sizing: border-box;
 	}
+
+	.bbs-frame-footer {
+		display: flex;
+		flex-direction: column;
+		flex-shrink: 0;
+		min-height: 0;
+	}
+
 	.border-row, .divider-row {
 		display: flex;
 		align-items: center;

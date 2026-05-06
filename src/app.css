@@ -77,11 +77,32 @@ body {
 	to   { clip-path: inset(0 0% 0 0); }
 }
 
-/* Narrow screens: single touch strip for Back / Home / theme; hide duplicate BBSFrame footers */
+/*
+ * Narrow (≤720px): see src/MOBILE_LAYOUT.spec.md
+ * — hide frame footer visually (keyboard handlers still attach on BackPrompt)
+ * — denser title/status chrome; ellipsis long system.name
+ */
+/* Plain selectors only — `:global()` is for Svelte <style>; it is not valid global CSS here. */
 @media (max-width: 720px) {
-	:global(.bbs-frame .divider-row:has(+ .footer-area)),
-	:global(.bbs-frame .footer-area) {
+	.bbs-frame-footer {
 		display: none !important;
+	}
+
+	.bbs-frame > .bbs-frame-titlebar.border-row {
+		font-size: var(--bbs-font-size-sm);
+		line-height: 1.2;
+	}
+
+	.status-bar {
+		font-size: calc(var(--bbs-font-size-sm) * 0.94);
+	}
+
+	.status-bar .status-bar-sysname {
+		display: inline-block;
+		max-width: min(11rem, 40vw);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		vertical-align: bottom;
 	}
 }
 

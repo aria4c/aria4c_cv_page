@@ -1,7 +1,7 @@
 # AboutScreen
 
 ## Purpose
-CV “About Me” route: portrait, badges, locale map, typed bio (`profile`), languages/domains lists. Mounted from `+page.svelte` when navigation `currentScreenId === 'about'`.
+CV “About Me” route: portrait, badges, locale map, typed bio (`profile`), languages/domains lists. Shares the canonical **≤720px** breakpoint and touch-nav rules in **`src/MOBILE_LAYOUT.spec.md`** plus **pager-specific** UX below.
 
 ## Components used
 | component | usage |

@@ -28,6 +28,8 @@ Animate ease-out cubic (800ms) unless `animated=false`.
 | `timelineFrom` | `number` | `0` | Active window lower bound |
 | `timelineTo` | `number` | `0` | Active window upper bound (use career length for “until now”) |
 | `labelAlignCols` | `number` | `0` | When `>0` and `label` is set, render a **fixed-width** label column in `ch` (CSS grid) so the bar column starts at the same horizontal offset for every row; short labels are padded, long labels are trimmed to `labelAlignCols`. When `0`, use the legacy single-line `labelWidth` pad/trim behaviour. |
+| `splitLabelBar` | `boolean` | `false` | Two rows: wrapped **full label**, then monospace bar + suffix (no ellipsis). Pair with **`splitBarTrailing`** to anchor the bar line to the right (`SkillsScreen` mobile pager). |
+| `splitBarTrailing` | `boolean` | `false` | With **`splitLabelBar`**, **`align-self: flex-end`** on the bar row. |
 
 ## Behavior
 ### `timeline`
@@ -41,5 +43,5 @@ Parent should set **`labelAlignCols ≥` longest expected label length** (in mon
 
 ## Acceptance Criteria
 - [ ] `timeline` permits leading empty region (recent-only tools) and trailing gaps (skills dropped before “now”).
-- [ ] `timeline` suffix is a short overlap length only, e.g. `5y` (no `yr …→now` prose).
+- [ ] `timeline` suffix shows overlap length only (no `yr …→now` prose). The number is **left-padded to fixed width** before `y` (monospace) so `8y` and `11y` keep the bar + tail from shifting.
 - [ ] `%`/`years` behaviour unchanged aside from typings.

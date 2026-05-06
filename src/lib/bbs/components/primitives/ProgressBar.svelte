@@ -19,6 +19,10 @@
 	export let timelineTo:          number   = 0;
 	/** Fixed label lane in `ch`; >0 uses grid so bar column lines up across rows (parent should set ≥ longest label) */
 	export let labelAlignCols:      number   = 0;
+	/** Label on line 1 (full wrap), bar + trailing value on line 2 — e.g. `SkillsScreen` mobile */
+	export let splitLabelBar:       boolean  = false;
+	/** With `splitLabelBar`, pin the bar row to the right (`align-self: flex-end`) */
+	export let splitBarTrailing:    boolean  = false;
 
 	const LABEL_GAP_SPACES = 2;
 
@@ -67,9 +71,13 @@
 		return Number.isInteger(r) || Math.abs(r - Math.round(r)) < 1e-6 ? String(Math.round(r)) : r.toFixed(1);
 	}
 
+	/** Monospace run before `y` so `8y` / `11y` / `8.5y` keep the bar + tail width stable */
+	const TIMELINE_SUFFIX_NUM_CH = 5;
+
 	function timelineSuffix(from: number, to: number, careerSpan: number): string {
 		const ov = overlapDuration(from, to, careerSpan);
-		return `${fmtYR(ov)}y`;
+		const n = fmtYR(ov);
+		return `${n.padStart(TIMELINE_SUFFIX_NUM_CH)}y`;
 	}
 
 	function formatYearLabel(v: number): string {
@@ -175,7 +183,21 @@
 	$: gridCols = `${Math.max(labelAlignCols, 1)}ch minmax(0, max-content)`;
 </script>
 
-{#if labelAlignCols > 0 && label}
+{#if splitLabelBar && label}
+	<div class="pbs pbs-split-label-bar">
+		<div class="pbs-split-label">{label}</div>
+		<div
+			class="pbs-split-tail"
+			class:pbs-split-tail--trailing={splitBarTrailing}
+		>
+			<span class="pbs-bar-glyphs">{bar}</span>
+			{#if showVal}
+				<span class="pbs-bar-gap">&nbsp;&nbsp;</span>
+				<span class="pbs-value-suffix">{valueSuffix}</span>
+			{/if}
+		</div>
+	</div>
+{:else if labelAlignCols > 0 && label}
 	<div
 		class="pbs pbs-aligned"
 		style="
@@ -217,5 +239,44 @@
 	.pbs-value-suffix {
 		font-size: var(--bbs-font-size-sm);
 		color: var(--bbs-secondary);
+	}
+
+	/* Split label / bar rows (mobile skills): full-label wrap + optional right-aligned monospace tail */
+	.pbs-split-label-bar {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+		align-items: stretch;
+		min-width: 0;
+		max-width: 100%;
+		box-sizing: border-box;
+		font-family: var(--bbs-font);
+		line-height: var(--bbs-line-height);
+		color: var(--bbs-fg);
+	}
+
+	.pbs-split-label {
+		align-self: stretch;
+		color: var(--bbs-secondary);
+		font-size: var(--bbs-font-size-sm);
+		word-break: break-word;
+		overflow-wrap: anywhere;
+	}
+
+	.pbs-split-tail {
+		display: inline-flex;
+		align-items: baseline;
+		align-self: flex-start;
+		white-space: pre;
+		font-size: calc(var(--bbs-font-size-sm) * 0.94);
+		min-width: 0;
+	}
+
+	.pbs-split-tail--trailing {
+		align-self: flex-end;
+	}
+
+	.pbs-split-tail .pbs-bar-glyphs {
+		color: var(--bbs-primary);
 	}
 </style>

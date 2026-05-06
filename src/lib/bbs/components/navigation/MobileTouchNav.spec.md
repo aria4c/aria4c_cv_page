@@ -9,7 +9,7 @@ Narrow-viewport-only touch strip for **Back**, **Home**, and **theme day/night t
 | — | — | — | No props; reads `configStore`, `themeModeStore`, `matrixLockedStore`. |
 
 ## Behaviour
-- Shown only inside a `@media (max-width: 720px)` block (component-scoped); layout-level `app.css` hides `BBSFrame` footer rows that duplicate these actions on the same breakpoint.
+- Shown only inside a `@media (max-width: 720px)` block (component-scoped); layout-level **`app.css`** hides **`.bbs-frame-footer`** on the same breakpoint (`src/MOBILE_LAYOUT.spec.md`) so `BackPrompt` controls are not shown twice.
 - Back / Home buttons call `goBack()` and `goHome()`; labels and bracket keys come from `config.navigation.backKey` / `homeKey`.
 - Theme control is rendered only when `config.themeDay` is set **and** `config.navigation.themeToggleKey` is non-null; otherwise omitted (same precondition as keyboard theme toggle).
 - When `matrixLocked` is true: theme control is `disabled`, uses dim `KeyHint`, label `LOCK`.
@@ -22,3 +22,4 @@ Narrow-viewport-only touch strip for **Back**, **Home**, and **theme day/night t
 - [ ] Back and Home invoke the same navigation as keyboard priority-1 handlers.
 - [ ] Theme tap calls `toggleThemeMode()` when allowed; does nothing when matrix-locked or when `themeDay` / `themeToggleKey` absent.
 - [ ] With matrix lock, theme control is visibly disabled and non-interactive.
+- [ ] Pairs with suppressed `BBSFrame` top hints on ≤720px (`MOBILE_LAYOUT.spec.md`) — user does not see redundant `[H]` text above and `MobileTouchNav` below.

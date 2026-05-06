@@ -22,6 +22,7 @@ Persistent one-line bar at the top or bottom of the screen. Shows system name, n
 - Connection string format: `{baudRate} BAUD  8N1` — hidden if `baudRate` is 0
 - `customFields` are rendered after the node info: `{field.label}: {field.value}`
 - `field.value` can be a static string or a `() => string` function (called on each render)
+- System name uses class **`status-bar-sysname`** — on **≤720px** global CSS tightens bar font size and applies `text-overflow: ellipsis` with a capped width so long `system.name` strings (product + version) do not dominate (`src/MOBILE_LAYOUT.spec.md`)
 
 ## Acceptance Criteria
 - [ ] System name and node ID appear in left section when `showNodeId` is true
@@ -30,3 +31,4 @@ Persistent one-line bar at the top or bottom of the screen. Shows system name, n
 - [ ] Clock appears in right section when `showClock` is true (and stalls when `setClockFrozen(true)` is active)
 - [ ] Connection speed string hidden when `showConnectionSpeed` is false
 - [ ] Custom fields render in order with correct label/value
+- [ ] ≤720px: `system.name` cell ellipsizes rather than forcing the bar to oversized glyphs (see `MOBILE_LAYOUT.spec.md`)

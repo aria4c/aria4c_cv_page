@@ -23,7 +23,7 @@
 
 <div
 	class="status-bar"
-		style="
+	style="
 		position: relative;
 		z-index: 2;
 		background: var(--bbs-bg);
@@ -44,7 +44,7 @@
 	<!-- Left section -->
 	<div style="display: flex; gap: 16px; align-items: center; overflow: hidden;">
 		{#if statusBarConfig.showNodeId}
-			<span style="color: var(--bbs-primary);">{system.name}</span>
+			<span class="status-bar-sysname" style="color: var(--bbs-primary);">{system.name}</span>
 			<span>|</span>
 			<span>{system.nodeId}</span>
 		{/if}

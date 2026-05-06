@@ -52,32 +52,20 @@
 			Establish connection using one of the following channels:
 		</div>
 
-		<div style="
-			border: 1px solid var(--bbs-muted);
-			display: flex;
-			flex-direction: column;
-		">
+		<div class="contact-channels-box">
 			{#each profile.contactLinks as link}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<div
 					role="button"
 					tabindex="0"
+					class="contact-channel-row"
 					on:click={() => activate(link)}
-					style="
-						display: flex;
-						align-items: baseline;
-						gap: 1rem;
-						padding: 0.5rem 0.75rem;
-						cursor: pointer;
-						border-bottom: 1px solid var(--bbs-muted);
-						color: var(--bbs-fg);
-					"
 					on:mouseenter={hoverEnter}
 					on:mouseleave={hoverLeave}
 				>
-					<span style="color: var(--bbs-primary); flex-shrink: 0;">[{link.key}]</span>
-					<span style="color: var(--bbs-secondary); min-width: 10ch; flex-shrink: 0;">{link.label}</span>
-					<span>{link.value}</span>
+					<span class="contact-channel-key">[{link.key}]</span>
+					<span class="contact-channel-label">{link.label}</span>
+					<span class="contact-channel-value">{link.value}</span>
 				</div>
 			{/each}
 		</div>
@@ -95,3 +83,59 @@
 		<BackPrompt />
 	</svelte:fragment>
 </BBSFrame>
+
+<style>
+	.contact-channels-box {
+		border: 1px solid var(--bbs-muted);
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+	}
+
+	.contact-channel-row {
+		display: flex;
+		align-items: baseline;
+		gap: 0.75rem 1rem;
+		padding: 0.5rem 0.75rem;
+		cursor: pointer;
+		border-bottom: 1px solid var(--bbs-muted);
+		color: var(--bbs-fg);
+		min-width: 0;
+	}
+
+	.contact-channel-row:last-child {
+		border-bottom: none;
+	}
+
+	.contact-channel-key {
+		color: var(--bbs-primary);
+		flex-shrink: 0;
+	}
+
+	.contact-channel-label {
+		color: var(--bbs-secondary);
+		min-width: 8ch;
+		flex-shrink: 0;
+	}
+
+	.contact-channel-value {
+		min-width: 0;
+		flex: 1 1 auto;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	@media (max-width: 720px) {
+		.contact-channel-row {
+			flex-wrap: wrap;
+		}
+
+		.contact-channel-value {
+			flex: 1 1 100%;
+			white-space: normal;
+			overflow-wrap: anywhere;
+			word-break: break-word;
+		}
+	}
+</style>

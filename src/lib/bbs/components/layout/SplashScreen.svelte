@@ -5,7 +5,6 @@
 	import BootSequence from '../effects/BootSequence.svelte';
 	import BlinkingCursor from '../effects/BlinkingCursor.svelte';
 	import { configStore } from '../../stores/config.store.js';
-	import { attachKeyboardListener } from '../../utils/keyboard.js';
 
 	export let config: SplashConfig;
 
@@ -98,6 +97,9 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		width: 100%;
+		max-width: 100%;
+		box-sizing: border-box;
 		height: 100%;
 		padding: 2rem;
 		gap: 1rem;
@@ -117,7 +119,7 @@
 	/>
 
 	{#if config.tagline}
-		<div style="color: var(--bbs-secondary); letter-spacing: 0.15em; margin-top: 0.25rem;">
+		<div class="splash-tagline">
 			{config.tagline}
 		</div>
 	{/if}
@@ -135,10 +137,59 @@
 
 	<!-- Press any key prompt -->
 	{#if phase === 'press-key'}
-		<div style="margin-top: 1.5rem; color: var(--bbs-secondary); letter-spacing: 0.1em;">
-			<BlinkingCursor char="▌" inline />
-			&nbsp;{config.pressAnyKeyText}&nbsp;
+		<div class="splash-press-prompt">
+			{config.pressAnyKeyText}&nbsp;
 			<BlinkingCursor char="▌" inline />
 		</div>
 	{/if}
 </div>
+
+<style>
+	@media (max-width: 720px) {
+		.splash-screen {
+			padding-left: max(1rem, env(safe-area-inset-left));
+			padding-right: max(1rem, env(safe-area-inset-right));
+			padding-bottom: max(1rem, env(safe-area-inset-bottom));
+		}
+	}
+
+	.splash-tagline {
+		color: var(--bbs-secondary);
+		letter-spacing: 0.15em;
+		margin-top: 0.25rem;
+		max-width: 100%;
+		box-sizing: border-box;
+		padding: 0 0.75rem;
+		text-align: center;
+		line-height: 1.4;
+		word-wrap: break-word;
+		overflow-wrap: break-word;
+	}
+
+	.splash-press-prompt {
+		margin-top: 1.5rem;
+		color: var(--bbs-secondary);
+		letter-spacing: 0.1em;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-wrap: wrap;
+		gap: 0.15rem;
+		max-width: 100%;
+		padding: 0 0.75rem;
+		box-sizing: border-box;
+		text-align: center;
+	}
+
+	@media (max-width: 720px) {
+		.splash-tagline {
+			letter-spacing: 0.06em;
+			font-size: var(--bbs-font-size-sm);
+		}
+
+		.splash-press-prompt {
+			letter-spacing: 0.04em;
+			font-size: var(--bbs-font-size-sm);
+		}
+	}
+</style>

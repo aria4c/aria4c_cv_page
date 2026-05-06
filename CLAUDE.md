@@ -84,6 +84,7 @@ All theme values are available as CSS vars set by `theme.store.ts`:
 - **Content stays in `src/content/`.** Screens import typed data objects; they don't hardcode strings.
 - **Box-drawing fills via overflow-clip.** Long fill strings (300 chars) are clipped by CSS — don't use JS string measurement for borders.
 - **Keyboard handler priority.** `register(key, fn, priority)` — higher number = higher priority. Screens use priority 2, global nav (back/home/theme toggle) uses priority 1.
+- **Mobile (no keyboard).** From **≤720px** width, `MobileTouchNav` in `+layout.svelte` shows Back / Home / theme (when configured) using the same stores as keyboard nav; `app.css` hides `BBSFrame` footers on that breakpoint to avoid duplicate controls. Wider layouts are unchanged.
 - **Day/night.** Optional `bbsConfig.themeDay` (black-on-white) alongside `theme` (white-on-black). `navigation.themeToggleKey` (e.g. `T`) calls `toggleThemeMode()`; preference stored under `bbs-appearance` in `localStorage`. Rapid toggles can trigger **Matrix mode** (green-on-black, Matrix rain overlay **before** each screen commits on navigation, frozen clock, theme toggle disabled until full page refresh — see `theme.store` / `navigation.store` / `MatrixRain.svelte`).
 - **Spec files live next to implementation.** `*.spec.md` alongside the file it describes.
 - **Framework is content-agnostic.** Nothing inside `src/lib/bbs/` should import from `src/content/` or `src/routes/`.

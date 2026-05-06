@@ -4,6 +4,7 @@
 	import StatusBar from '$lib/bbs/components/layout/StatusBar.svelte';
 	import CRTOverlay from '$lib/bbs/components/effects/CRTOverlay.svelte';
 	import MatrixRain from '$lib/bbs/components/effects/MatrixRain.svelte';
+	import MobileTouchNav from '$lib/bbs/components/navigation/MobileTouchNav.svelte';
 	import { bbsConfig } from '../bbs.config.js';
 	import { currentScreen, matrixNavigationRainStore } from '$lib/bbs';
 
@@ -45,6 +46,8 @@
 	>
 		<slot />
 	</main>
+
+	<MobileTouchNav />
 
 	{#if bbsConfig.statusBar.position === 'bottom' || bbsConfig.statusBar.position === 'both'}
 		<StatusBar statusBarConfig={bbsConfig.statusBar} system={bbsConfig.system} />

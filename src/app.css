@@ -77,7 +77,11 @@ body {
 	to   { clip-path: inset(0 0% 0 0); }
 }
 
-/* Suppress browser focus rings — BBS handles its own selection state */
-#app *:focus {
-	outline: none;
+/* Narrow screens: single touch strip for Back / Home / theme; hide duplicate BBSFrame footers */
+@media (max-width: 720px) {
+	:global(.bbs-frame .divider-row:has(+ .footer-area)),
+	:global(.bbs-frame .footer-area) {
+		display: none !important;
+	}
 }
+

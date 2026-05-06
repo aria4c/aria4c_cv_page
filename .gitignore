@@ -79,6 +79,9 @@ Desktop.ini
 !.vscode/tasks.json
 !.vscode/launch.json
 
+# ─── Local design reference (Figma / banners / merchant) ───────────────────
+design-system-local/
+
 # ─── Misc ─────────────────────────────────────────────────────────────────────
 *.log
 *.pem
